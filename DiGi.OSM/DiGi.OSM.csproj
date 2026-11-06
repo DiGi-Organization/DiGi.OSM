@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
@@ -23,7 +23,23 @@
 
   <ItemGroup>
     <PackageReference Include="OsmSharp" Version="6.2.0" />
-    <PackageReference Include="OsmSharp.Geo" Version="6.2.0" />
+    <!-- Copied verbatim from DiGi.GIS.IO: the Footprint attribute/provenance bags are JsonObject. -->
+    <PackageReference Include="System.Text.Json" Version="10.0.9" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- The reader returns DiGi.GIS.IO's Footprint (the shared open-building-dataset contract of
+         DiGi-Organization/DiGi.OSM#1), built directly as DiGi planar geometry. OsmSharp.Geo is
+         deliberately NOT referenced: it pins NetTopologySuite 1.15.0 / GeoAPI 1.7.5, which cannot
+         coexist with the workspace's NetTopologySuite 2.6.0 (DiGi.GIS.IO, DiGi.Geometry). -->
+    <Reference Include="DiGi.Core">
+      <HintPath>..\..\DiGi.Core\bin\DiGi.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DiGi.Geometry">
+      <HintPath>..\..\DiGi.Geometry\bin\DiGi.Geometry.dll</HintPath>
+    </Reference>
+    <Reference Include="DiGi.GIS.IO">
+      <HintPath>..\..\DiGi.GIS.IO\bin\DiGi.GIS.IO.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
